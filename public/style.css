@@ -1,25 +1,82 @@
 body {
+  background-image: url("images/medicine-8287535.jpg");
+  background-size: cover;
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f8f8f8;
 }
-
-nav {
-  color: #0483be;
-  margin: 0 1rem;
-  text-decoration: none;
-  padding: 1rem;
-  display: fixed;
-  justify-content: left;
-  align-items: right;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-
-.nav .brand {
+.highlight-box {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  display: inline-block;
+  animation: fadeIn 2s ease-out forwards;
+  opacity: 0;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+h2 {
+  font-size: 3rem;
+  transition: 1sec;
+  color: rgb(253, 253, 253);
+}
+p {
+  font-size: 1rem;
+  color: white;
+}
+nav {
+  background-color: #058af7;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: left;
+}
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  display: fixed;
+  justify-content: right;
+}
+nav ul li {
+  margin: 0 15px;
+}
+nav h1 {
   color: white;
   font-size: 1.5rem;
-  text-decoration: none;
   font-weight: bold;
+  margin: 0;
+  justify-content: right;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+
+nav a:hover {
+  background-color: #282928;
+  border-radius: 5px;
 }
 
 .nav-links {
@@ -28,22 +85,9 @@ nav {
   gap: 1rem;
 }
 
-.nav-links li {
-  display: inline;
+home {
+  align-items: center;
 }
-
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  transition: background 0.3s;
-}
-
-.nav-links a:hover {
-  background-color: #3e8e41;
-  border-radius: 5px;
-}
-
 main {
   padding: 2rem;
 }
@@ -78,4 +122,21 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+footer {
+  background-color: #000;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+}
+
+main {
+  padding-bottom: 3rem;
 }

@@ -10,8 +10,6 @@ app.set("layout", "layout");
 // Middleware
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// Sample data for medicines
 const medicines = [
   {
     id: 1,
@@ -34,9 +32,100 @@ const medicines = [
     description: "Fever reducer",
     image: "paracetamol.jpg",
   },
+  {
+    id: 4,
+    name: "Paracetamol",
+    price: 12,
+    description: "Fever reducer",
+    image: "paracetamol.jpg",
+  },
+  {
+    id: 5,
+    name: "Paracetamol",
+    price: 12,
+    description: "Fever reducer",
+    image: "paracetamol.jpg",
+  },
+  {
+    id: 6,
+    name: "Paracetamol",
+    price: 12,
+    description: "Fever reducer",
+    image: "paracetamol.jpg",
+  },
+  {
+    id: 7,
+    name: "Paracetamol",
+    price: 12,
+    description: "Fever reducer",
+    image: "paracetamol.jpg",
+  },
+  {
+    id: 8,
+    name: "Paracetamol",
+    price: 12,
+    description: "Fever reducer",
+    image: "paracetamol.jpg",
+  },
+  {
+    id: 9,
+    name: "Paracetamol",
+    price: 12,
+    description: "Fever reducer",
+    image: "paracetamol.jpg",
+  },
+  {
+    id: 3,
+    name: "Paracetamol",
+    price: 12,
+    description: "Fever reducer",
+    image: "paracetamol.jpg",
+  },
+  {
+    id: 3,
+    name: "Paracetamol",
+    price: 12,
+    description: "Fever reducer",
+    image: "paracetamol.jpg",
+  },
+  {
+    id: 3,
+    name: "Paracetamol",
+    price: 12,
+    description: "Fever reducer",
+    image: "paracetamol.jpg",
+  },
+  {
+    id: 3,
+    name: "Paracetamol",
+    price: 12,
+    description: "Fever reducer",
+    image: "paracetamol.jpg",
+  },
+  {
+    id: 3,
+    name: "Paracetamol",
+    price: 12,
+    description: "Fever reducer",
+    image: "paracetamol.jpg",
+  },
+  {
+    id: 3,
+    name: "Paracetamol",
+    price: 12,
+    description: "Fever reducer",
+    image: "paracetamol.jpg",
+  },
+  {
+    id: 3,
+    name: "Paracetamol",
+    price: 12,
+    description: "Fever reducer",
+    image: "paracetamol.jpg",
+  },
 ];
 
-// Cart (for demonstration, stored in memory)
+// Cart (stored in memory)
 let cart = [];
 
 // Routes
