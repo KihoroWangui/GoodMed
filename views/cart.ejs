@@ -1,19 +1,15 @@
 <h4>Your Cart</h4>
+
 <% if (cart.length > 0) { %>
-<table>
-  <thead>
-    <tr>
-      <th>Item</th>
-      <th>Price</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% cart.forEach(item => { %>
+<ul>
+  <% cart.forEach(item => { %>
+  <table>
     <tr>
       <td><%= item.name %></td>
       <td>Ksh<%= item.price %></td>
-      <td>
+    </tr>
+    <tr>
+      <td colspan="2">
         <form
           action="/cart/remove/<%= item.id %>"
           method="POST"
@@ -23,11 +19,42 @@
         </form>
       </td>
     </tr>
-    <% }) %>
-  </tbody>
-</table>
-<h4><strong>Total:</strong> Ksh<%= total %></h4>
-<button>Checkout</button>
+  </table>
+  <% }) %>
+</ul>
+
+<h4>Total: Ksh<%= total %></h4>
+
+<!-- Checkout Form -->
+<form id="qrForm" action="/generate-qr" method="POST">
+  <input type="hidden" name="total" value="<%= total %>" />
+  <input type="hidden" name="reference" value="123456" />
+  <button type="submit" id="generateQrBtn">Generate QR Code</button>
+</form>
+
+<div id="qrCodeContainer" style="display: none">
+  <p>Scan the QR code to make payment:</p>
+  <img id="qrCodeImage" src="" alt="Payment QR Code" />
+</div>
+
 <% } else { %>
 <p>Your cart is empty.</p>
 <% } %>
+
+<script>
+  const qrForm = document.getElementById("qrForm");
+  const qrCodeContainer = document.getElementById("qrCodeContainer");
+  const qrCodeImage = document.getElementById("qrCodeImage");
+
+  qrForm.onsubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(qrForm);
+    const response = await fetch(qrForm.action, {
+      method: "POST",
+      body: formData,
+    });
+    const data = await response.json();
+    qrCodeImage.src = data.qrCodeUrl;
+    qrCodeContainer.style.display = "block";
+  };
+</script>

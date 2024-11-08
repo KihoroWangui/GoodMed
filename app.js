@@ -3,6 +3,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const expressLayouts = require("express-ejs-layouts");
 const app = express();
+const QRCode = require("qrcode");
 
 app.set("view engine", "ejs");
 app.use(expressLayouts);
@@ -50,16 +51,6 @@ app.get("/medicines", (req, res) => {
   res.render("medicine-list", { title: "Medicines", medicines });
 });
 
-app.get("/medicines/:id", (req, res) => {
-  const medicineId = parseInt(req.params.id, 10);
-  const medicine = medicines.find((m) => m.id === medicineId);
-  if (medicine) {
-    res.render("medicine-detail", { title: "Medicine Detail", medicine });
-  } else {
-    res.status(404).send("Medicine not found");
-  }
-});
-
 // Cart (stored in memory)
 let cart = [];
 
@@ -75,15 +66,40 @@ app.post("/cart/add/:id", (req, res) => {
   }
 });
 
+// Cart page route
 app.get("/cart", (req, res) => {
   const total = cart.reduce((sum, item) => sum + item.price, 0);
   res.render("cart", { title: "Your Cart", cart, total });
 });
 
+// Remove from cart route
 app.post("/cart/remove/:id", (req, res) => {
   const medicineId = parseInt(req.params.id, 10);
   cart = cart.filter((item) => item.id !== medicineId);
   res.redirect("/cart");
+});
+
+// Route to generate QR code with payment details
+app.post("/generate-qr", (req, res) => {
+  const { total, reference } = req.body;
+
+  const paymentDetails = {
+    amount: total,
+    reference: reference,
+    message: "Pay to Till Number 0746554496",
+  };
+
+  // Create a QR code with the payment details
+  const qrData = JSON.stringify(paymentDetails);
+
+  QRCode.toDataURL(qrData, (err, url) => {
+    if (err) {
+      return res.status(500).send("Error generating QR Code");
+    }
+
+    // Send the generated QR code as a JSON response
+    res.json({ qrCodeUrl: url });
+  });
 });
 
 const PORT = process.env.PORT || 4000;
