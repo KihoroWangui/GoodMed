@@ -1,15 +1,20 @@
 <h4>Your Cart</h4>
 
 <% if (cart.length > 0) { %>
-<ul>
-  <% cart.forEach(item => { %>
-  <table>
+<table id="cartTable">
+  <thead>
     <tr>
+      <th>Item Name</th>
+      <th>Price</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="cartTableBody">
+    <% cart.forEach(item => { %>
+    <tr id="item-<%= item.id %>">
       <td><%= item.name %></td>
       <td>Ksh<%= item.price %></td>
-    </tr>
-    <tr>
-      <td colspan="2">
+      <td>
         <form
           action="/cart/remove/<%= item.id %>"
           method="POST"
@@ -19,9 +24,9 @@
         </form>
       </td>
     </tr>
-  </table>
-  <% }) %>
-</ul>
+    <% }) %>
+  </tbody>
+</table>
 
 <h4>Total: Ksh<%= total %></h4>
 
@@ -33,7 +38,7 @@
 </form>
 
 <div id="qrCodeContainer" style="display: none">
-  <p>Scan the QR code to make payment:</p>
+  <h4>Scan the QR code to make payment:</h4>
   <img id="qrCodeImage" src="" alt="Payment QR Code" />
 </div>
 
@@ -42,12 +47,45 @@
 <% } %>
 
 <script>
+  // Function to update the cart dynamically without refreshing the page
+  const addToCart = (medicine) => {
+    const tableBody = document.getElementById("cartTableBody");
+    const row = document.createElement("tr");
+    row.id = `item-${medicine.id}`;
+    row.innerHTML = `
+      <td>${medicine.name}</td>
+      <td>$${medicine.price}</td>
+      <td>
+        <form action="/cart/remove/${medicine.id}" method="POST" style="display: inline">
+          <button type="submit">Remove</button>
+        </form>
+      </td>
+    `;
+    tableBody.appendChild(row);
+
+    // Update the total dynamically (you can calculate this with your own logic)
+    const totalElement = document.getElementById("total");
+    totalElement.textContent = `Total: $${calculateTotal()}`;
+  };
+
+  // Function to calculate the total price dynamically
+  const calculateTotal = () => {
+    let total = 0;
+    const rows = document.querySelectorAll("#cartTableBody tr");
+    rows.forEach((row) => {
+      const price = parseFloat(row.cells[1].textContent.replace("$", ""));
+      total += price;
+    });
+    return total;
+  };
+
+  // Checkout Form submission logic
   const qrForm = document.getElementById("qrForm");
   const qrCodeContainer = document.getElementById("qrCodeContainer");
   const qrCodeImage = document.getElementById("qrCodeImage");
 
   qrForm.onsubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevent the form from submitting normally
     const formData = new FormData(qrForm);
     const response = await fetch(qrForm.action, {
       method: "POST",
@@ -55,6 +93,6 @@
     });
     const data = await response.json();
     qrCodeImage.src = data.qrCodeUrl;
-    qrCodeContainer.style.display = "block";
+    qrCodeContainer.style.display = "block"; // Show the QR code
   };
 </script>

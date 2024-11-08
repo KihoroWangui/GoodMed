@@ -1,4 +1,14 @@
 <div class="fade-in highlight-box">
   <h2>Welcome to the Medicine Platform</h2>
-  <h1>Buy genuine medicines at the best prices.</h1>
+  <h1>
+    Visit the Medicine Page to Purchase
+    <button id="goToMedicines">Proceed</button>
+  </h1>
 </div>
+<script>
+  document
+    .getElementById("goToMedicines")
+    .addEventListener("click", function () {
+      window.location.href = "/medicines";
+    });
+</script>

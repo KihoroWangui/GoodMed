@@ -101,6 +101,10 @@ app.post("/generate-qr", (req, res) => {
     res.json({ qrCodeUrl: url });
   });
 });
+// app.js
+app.get("/medicines", (req, res) => {
+  res.render("medicine-list", { title: "Medicines", medicines });
+});
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
