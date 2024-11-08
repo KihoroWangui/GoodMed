@@ -1,0 +1,15 @@
+<% layout('layout') -%>
+
+<h2>Available Medicines</h2>
+<div class="medicine-list">
+  <% medicines.forEach(medicine => { %>
+  <div class="medicine-card">
+    <img src="/images/<%= medicine.image %>" alt="<%= medicine.name %>" />
+    <h3><a href="/medicines/<%= medicine.id %>"><%= medicine.name %></a></h3>
+    <p>Price: $<%= medicine.price %></p>
+    <form action="/cart/add/<%= medicine.id %>" method="POST">
+      <button type="submit">Add to Cart</button>
+    </form>
+  </div>
+  <% }) %>
+</div>
